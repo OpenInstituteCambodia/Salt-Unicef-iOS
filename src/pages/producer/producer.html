@@ -1,0 +1,95 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Producer</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form>
+    <ion-list>
+
+      <!-- producer -->
+      <ion-item>
+        <ion-label>{{ 'Producer'}}</ion-label>
+        <ion-input type="text" name="producer_name"></ion-input>
+      </ion-item>
+
+      <!-- Date of Measurement -->
+      <ion-item>
+        <ion-label>{{ 'Date of measurement'}}</ion-label>
+        <ion-datetime displayFormat="MM/DD/YYYY"></ion-datetime>
+      </ion-item>
+
+      <!-- Salt produced today (Kg) -->              
+      <ion-item>
+        <ion-label>{{ 'Salt produced today (Kg)'}}</ion-label>
+        <ion-input type="text" name="salt_per_day"></ion-input>
+      </ion-item>
+
+      <!-- Potassium used today (Kg) -->       
+      <ion-item>
+        <ion-label>{{ 'Potassium used today (Kg)'}}</ion-label>
+        <ion-input type="text" name="potassium_per_day"></ion-input>
+      </ion-item>
+
+      <!-- Potassium in stock (Kg) -->
+      <ion-item>
+        <ion-label>{{ 'Potassium in stock (Kg)'}}</ion-label>
+        <ion-input type="text" name="potassium_in_stock"></ion-input>
+      </ion-item>
+
+      <!-- Measurement 1 (ppm) -->
+      <ion-item>
+        <ion-label>{{ 'Measurement 1 (ppm)'}}</ion-label>
+        <ion-input type="text" name="measurement_1"></ion-input>
+      </ion-item>
+
+      <!-- Measurement 2 (ppm) -->
+      <ion-item>
+        <ion-label>{{ 'Measurement 2 (ppm)'}}</ion-label>
+        <ion-input type="text" name="measurement_2"></ion-input>
+      </ion-item>
+
+      <!-- Measurement 3 (ppm) -->
+      <ion-item>
+        <ion-label>{{ 'Measurement 3 (ppm)'}}</ion-label>
+        <ion-input type="text" name="measurement_3"></ion-input>
+      </ion-item>
+
+      <!-- Measurement 4 (ppm) -->
+      <ion-item>
+        <ion-label>{{ 'Measurement 4 (ppm)'}}</ion-label>
+        <ion-input type="text" name="measurement_4"></ion-input>
+      </ion-item>
+
+      <!-- Measurement 5 (ppm) -->
+      <ion-item>
+        <ion-label>{{ 'Measurement 5 (ppm)'}}</ion-label>
+        <ion-input type="text" name="measurement_5"></ion-input>
+      </ion-item>
+
+      <!-- Measurement 6 (ppm) -->
+      <ion-item>
+        <ion-label>{{ 'Measurement 6 (ppm)'}}</ion-label>
+        <ion-input type="text" name="measurement_6"></ion-input>
+      </ion-item>
+
+      <!-- Measurement 7 (ppm) -->
+      <ion-item>
+        <ion-label>{{ 'Measurement 7 (ppm)'}}</ion-label>
+        <ion-input type="text" name="measurement_7"></ion-input>
+      </ion-item>
+      
+      <!-- Measurement 8 (ppm) -->
+      <ion-item>
+        <ion-label>{{ 'Measurement 8 (ppm)'}}</ion-label>
+        <ion-input type="text" name="measurement_8"></ion-input>
+      </ion-item>
+
+      <!-- Submit button -->
+      <div padding>
+        <button ion-button color="primary" block>{{ 'Send'}}</button>
+      </div>
+    </ion-list>
+  </form>
+</ion-content>

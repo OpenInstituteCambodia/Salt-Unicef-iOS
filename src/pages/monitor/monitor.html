@@ -1,0 +1,91 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Monitor</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form>
+    <ion-list>
+      <!-- Monitor -->      
+      <ion-item>
+        <ion-label>{{ 'Monitor'}}</ion-label>
+        <ion-input type="text" name="producer_name"></ion-input>
+      </ion-item>
+
+      <!-- Producer - Select Option -->
+      <ion-item>
+        <ion-label>Producer</ion-label>
+        <ion-select>
+          <ion-option value="producer_1">Producer 1</ion-option>
+          <ion-option value="producer_2">Producer 2</ion-option>
+          <ion-option value="producer_3">Producer 3</ion-option>
+          <ion-option value="producer_4">Producer 4</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- Date of measurement -->
+      <ion-item>
+        <ion-label>{{ 'Date of measurement'}}</ion-label>
+        <ion-datetime displayFormat="MM/DD/YYYY"></ion-datetime>
+      </ion-item>
+
+      <!-- Are you a producer? - Radio button: Y/N -->
+      <ion-list radio-group>
+        <ion-list-header>
+          Are you a producer?
+        </ion-list-header>
+
+        <ion-item>
+          <ion-label>Yes</ion-label>
+          <ion-radio checked="true" value="1"></ion-radio>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>No</ion-label>
+          <ion-radio value="0"></ion-radio>
+        </ion-item>
+      </ion-list>
+      
+      <!-- Location -->
+      <ion-item>
+        <ion-label>{{ 'Location'}}</ion-label>
+        <ion-input type="text" name="location"></ion-input>
+      </ion-item>
+
+      <!-- Measurement (ppm) -->
+      <ion-item>
+        <ion-label>{{ 'Measurement (ppm)'}}</ion-label>
+        <ion-input type="text" name="measurement"></ion-input>
+      </ion-item>
+
+      <!-- Warning given? - Radio button: Y/N -->
+      <ion-list radio-group>
+        <ion-list-header>
+          {{ 'Warning given?'}}
+        </ion-list-header>
+
+        <ion-item>
+          <ion-label>Yes</ion-label>
+          <ion-radio checked="true" value="1"></ion-radio>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>No</ion-label>
+          <ion-radio value="0"></ion-radio>
+        </ion-item>
+      </ion-list>
+
+      <!-- Date for follow-up -->
+      <ion-item>
+        <ion-label>{{ 'Date for follow-up'}}</ion-label>
+        <ion-datetime displayFormat="MM/DD/YYYY"></ion-datetime>
+      </ion-item>
+
+      <!-- Submit button -->
+      <div padding>
+        <button ion-button color="primary" block>{{ 'Send'}}</button>
+      </div>
+    </ion-list>
+  </form>
+</ion-content>

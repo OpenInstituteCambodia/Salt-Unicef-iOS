@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Login
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form>
+    <ion-list>
+      <ion-item>
+        <ion-label>{{ 'Username'}}</ion-label>
+        <ion-input type="text" name="username"></ion-input>
+      </ion-item>
+      
+      <ion-item>
+        <ion-label>{{ 'Password'}}</ion-label>
+        <ion-input type="password" name="password"></ion-input>
+      </ion-item>
+
+      <div padding>
+        <button ion-button color="primary" block>{{ 'Login'}}</button>
+      </div>
+    </ion-list>
+  </form>
+  <div padding>
+    <button ion-button color="primary" block (click)="openProducerPage()">
+      {{ 'Producer'}}
+    </button>
+  </div>
+  <div padding>
+    <button ion-button color="primary" block (click)="openMonitorPage()">
+      {{ 'Monitor'}}
+    </button>
+  </div>
+
+  
+</ion-content>
