@@ -10,20 +10,23 @@
   <form>
     <ion-list>
       <ion-item>
-        <ion-label>{{ 'Username'}}</ion-label>
-        <ion-input type="text" name="username"></ion-input>
+        <ion-label floating>{{ 'Username'}}</ion-label>
+        <ion-input type="text" #username></ion-input>
       </ion-item>
       
       <ion-item>
-        <ion-label>{{ 'Password'}}</ion-label>
-        <ion-input type="password" name="password"></ion-input>
+        <ion-label floating>{{ 'Password'}}</ion-label>
+        <ion-input type="password" #password></ion-input>
       </ion-item>
 
       <div padding>
-        <button ion-button color="primary" block>{{ 'Login'}}</button>
+        <button ion-button color="primary" block (click)="signIn()">
+          {{ 'Login'}}
+        </button>
       </div>
     </ion-list>
   </form>
+  
   <div padding>
     <button ion-button color="primary" block (click)="openProducerPage()">
       {{ 'Producer'}}
