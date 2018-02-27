@@ -15,9 +15,8 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { FormsModule } from '@angular/forms';
 
-
-// Initialize Firebase
-const firebaseAuth = {
+// Initialize Firebase -- phyrum 
+const config = {
   apiKey: "AIzaSyACf7ik6RsscUMQZbaOfhyKqclKpnpsJjY",
   authDomain: "salt-57e1d.firebaseapp.com",
   databaseURL: "https://salt-57e1d.firebaseio.com",
@@ -25,6 +24,16 @@ const firebaseAuth = {
   storageBucket: "salt-57e1d.appspot.com",
   messagingSenderId: "674607225137"
 };
+
+// --- samak firebase connection -----
+// var config = {
+//   apiKey: "AIzaSyAJSoAitZRbeI4oem3RR1Nd2ymBuJAWWos",
+//   authDomain: "salt-unicef-db-677ff.firebaseapp.com",
+//   databaseURL: "https://salt-unicef-db-677ff.firebaseio.com",
+//   projectId: "salt-unicef-db-677ff",
+//   storageBucket: "salt-unicef-db-677ff.appspot.com",
+//   messagingSenderId: "783683067533"
+// };
 
 @NgModule({
   declarations: [
@@ -36,9 +45,9 @@ const firebaseAuth = {
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    AngularFireModule.initializeApp(firebaseAuth),
-    // AngularFirestoreModule, // imports firebase/firestore, only needed for database features
-    AngularFireAuthModule, // imports firebase/auth, only needed for auth feature
+  // AngularFirestoreModule, // imports firebase/firestore, only needed for database features
+  AngularFireAuthModule, // imports firebase/auth, only needed for auth feature
+  AngularFireModule.initializeApp(config),
     AngularFireDatabaseModule,
     FormsModule
   ],

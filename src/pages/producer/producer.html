@@ -11,84 +11,84 @@
       <!-- producer -->
       <ion-item>
         <ion-label floating>{{ 'Producer'}}</ion-label>
-        <ion-input type="text" name="producer_name"></ion-input>
+        <ion-input type="text" name="producer_name" [(ngModel)]="producerName" [ngModelOptions]="{standalone: true}"></ion-input>
       </ion-item>
 
       <!-- Date of Measurement -->
       <ion-item>
         <ion-label floating>{{ 'Date of measurement'}}</ion-label>
-        <ion-datetime displayFormat="MM/DD/YYYY"></ion-datetime>
+        <ion-datetime displayFormat="MM/DD/YYYY"  [(ngModel)]="MeasurementDate" [ngModelOptions]="{standalone: true}"></ion-datetime>
       </ion-item>
 
       <!-- Salt produced today (Kg) -->              
       <ion-item>
         <ion-label floating>{{ 'Salt produced today (Kg)'}}</ion-label>
-        <ion-input type="text" name="salt_per_day"></ion-input>
+        <ion-input type="text" name="salt_per_day"  [(ngModel)]="saltProducedToday" [ngModelOptions]="{standalone: true}"></ion-input>
       </ion-item>
 
       <!-- Potassium used today (Kg) -->       
       <ion-item>
         <ion-label floating>{{ 'Potassium used today (Kg)'}}</ion-label>
-        <ion-input type="text" name="potassium_per_day"></ion-input>
+        <ion-input type="text" name="potassium_per_day"  [(ngModel)]="potassiumUsedToday" [ngModelOptions]="{standalone: true}"></ion-input>
       </ion-item>
 
       <!-- Potassium in stock (Kg) -->
       <ion-item>
         <ion-label floating>{{ 'Potassium in stock (Kg)'}}</ion-label>
-        <ion-input type="text" name="potassium_in_stock"></ion-input>
+        <ion-input type="text" name="potassium_in_stock"  [(ngModel)]="potassiumInStock"  [ngModelOptions]="{standalone: true}"></ion-input>
       </ion-item>
 
       <!-- Measurement 1 (ppm) -->
       <ion-item>
         <ion-label floating>{{ 'Measurement 1 (ppm)'}}</ion-label>
-        <ion-input type="text" name="measurement_1"></ion-input>
+        <ion-input type="text" name="measurement_1"  [(ngModel)]="measurement1"  [ngModelOptions]="{standalone: true}"></ion-input>
       </ion-item>
 
       <!-- Measurement 2 (ppm) -->
       <ion-item>
         <ion-label floating>{{ 'Measurement 2 (ppm)'}}</ion-label>
-        <ion-input type="text" name="measurement_2"></ion-input>
+        <ion-input type="text" name="measurement_2"  [(ngModel)]="measurement2"  [ngModelOptions]="{standalone: true}"></ion-input>
       </ion-item>
 
       <!-- Measurement 3 (ppm) -->
       <ion-item>
         <ion-label floating>{{ 'Measurement 3 (ppm)'}}</ion-label>
-        <ion-input type="text" name="measurement_3"></ion-input>
+        <ion-input type="text" name="measurement_3"  [(ngModel)]="measurement3"  [ngModelOptions]="{standalone: true}"></ion-input>
       </ion-item>
 
       <!-- Measurement 4 (ppm) -->
       <ion-item>
         <ion-label floating>{{ 'Measurement 4 (ppm)'}}</ion-label>
-        <ion-input type="text" name="measurement_4"></ion-input>
+        <ion-input type="text" name="measurement_4"  [(ngModel)]="measurement4"  [ngModelOptions]="{standalone: true}"></ion-input>
       </ion-item>
 
       <!-- Measurement 5 (ppm) -->
       <ion-item>
         <ion-label floating>{{ 'Measurement 5 (ppm)'}}</ion-label>
-        <ion-input type="text" name="measurement_5"></ion-input>
+        <ion-input type="text" name="measurement_5"  [(ngModel)]="measurement5"  [ngModelOptions]="{standalone: true}"></ion-input>
       </ion-item>
 
       <!-- Measurement 6 (ppm) -->
       <ion-item>
         <ion-label floating>{{ 'Measurement 6 (ppm)'}}</ion-label>
-        <ion-input type="text" name="measurement_6"></ion-input>
+        <ion-input type="text" name="measurement_6"  [(ngModel)]="measurement6"  [ngModelOptions]="{standalone: true}"></ion-input>
       </ion-item>
 
       <!-- Measurement 7 (ppm) -->
       <ion-item>
         <ion-label floating>{{ 'Measurement 7 (ppm)'}}</ion-label>
-        <ion-input type="text" name="measurement_7"></ion-input>
+        <ion-input type="text" name="measurement_7"  [(ngModel)]="measurement7"  [ngModelOptions]="{standalone: true}"></ion-input>
       </ion-item>
       
       <!-- Measurement 8 (ppm) -->
       <ion-item>
         <ion-label floating>{{ 'Measurement 8 (ppm)'}}</ion-label>
-        <ion-input type="text" name="measurement_8"></ion-input>
+        <ion-input type="text" name="measurement_8"  [(ngModel)]="measurement8"  [ngModelOptions]="{standalone: true}"></ion-input>
       </ion-item>
 
       <!-- Submit button -->
       <div padding>
-        <button ion-button color="primary" block>{{ 'Send'}}</button>
+        <button ion-button color="primary" block (click)="saveMeasurement()">{{ 'Send'}}</button>
       </div>
     </ion-list>
   </form>
