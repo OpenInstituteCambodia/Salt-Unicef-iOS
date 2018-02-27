@@ -9,6 +9,20 @@ import { LoginPage } from '../pages/login/login';
 
 import { ProducerPage } from '../pages/producer/producer';
 import { MonitorPage } from '../pages/monitor/monitor';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { FormsModule } from '@angular/forms';
+
+
+var config = {
+  apiKey: "AIzaSyAJSoAitZRbeI4oem3RR1Nd2ymBuJAWWos",
+  authDomain: "salt-unicef-db-677ff.firebaseapp.com",
+  databaseURL: "https://salt-unicef-db-677ff.firebaseio.com",
+  projectId: "salt-unicef-db-677ff",
+  storageBucket: "salt-unicef-db-677ff.appspot.com",
+  messagingSenderId: "783683067533"
+};
+
 
 @NgModule({
   declarations: [
@@ -19,7 +33,10 @@ import { MonitorPage } from '../pages/monitor/monitor';
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    AngularFireModule.initializeApp(config),
+    AngularFireDatabaseModule,
+    FormsModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
