@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, App} from 'ionic-angular';
 import {AngularFireDatabase} from 'angularfire2/database';
+import { AlertController } from 'ionic-angular';
 
 /**
  * Generated class for the ProducerPage page.
@@ -31,7 +32,9 @@ export class ProducerPage {
   measurement7: string ='';
   measurement8: string ='';
 
-  constructor(public db: AngularFireDatabase, public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public db: AngularFireDatabase, private alertCtrl:AlertController, 
+    public navCtrl: NavController, public navParams: NavParams, 
+    private platform: Platform, private app: App) {
     this.producerName = this.navParams.get('producerName');
     this.MeasurementDate = this.navParams.get('MeasurementDate');
     this.saltProducedToday = this.navParams.get('saltProducedToday');
@@ -46,6 +49,28 @@ export class ProducerPage {
     this.measurement7 = this.navParams.get('measurement7');
     this.measurement8 = this.navParams.get('measurement8');
 
+    platform.ready().then(() => {
+      //Registration of push in Android and Windows Phone
+      platform.registerBackButtonAction(() => {
+          let nav = this.app.getActiveNav();
+          console.log('Back is click')
+          if (nav.canGoBack()){ //Can we go back?
+              nav.popToRoot();
+          }else{
+              this.platform.exitApp(); //Exit from app
+          }
+      });
+  });
+
+  }
+  // creating alert dialog
+  alert(message: string)
+  {
+    this.alertCtrl.create({
+      title: 'Info',
+      subTitle: message,
+      buttons: ['OK']
+    }).present();
   }
 
   saveMeasurement()
@@ -66,6 +91,8 @@ export class ProducerPage {
       measurement8: this.measurement8,
     }).then(() => {
       // save data
+      this.alert("Successfully Saved");
+      this.navCtrl.push(ProducerPage);
     });
   }
 
