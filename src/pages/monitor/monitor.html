@@ -5,18 +5,19 @@
 </ion-header>
 
 <ion-content padding>
+  <!-- Hi {{ email }} -->
   <form>
     <ion-list>
       <!-- Monitor -->      
       <ion-item>
-        <ion-label>{{ 'Monitor'}}</ion-label>
-        <ion-input type="text" name="producer_name"></ion-input>
+        <ion-label floating>{{ 'Monitor'}}</ion-label>
+        <ion-input type="text" [(ngModel)]="monitorID" [ngModelOptions]="{standalone: true}"></ion-input>
       </ion-item>
 
       <!-- Producer - Select Option -->
       <ion-item>
-        <ion-label>Producer</ion-label>
-        <ion-select>
+        <ion-label floating>Producer</ion-label>
+        <ion-select [(ngModel)]="producerID" [ngModelOptions]="{standalone: true}">
           <ion-option value="producer_1">Producer 1</ion-option>
           <ion-option value="producer_2">Producer 2</ion-option>
           <ion-option value="producer_3">Producer 3</ion-option>
@@ -26,19 +27,18 @@
 
       <!-- Date of measurement -->
       <ion-item>
-        <ion-label>{{ 'Date of measurement'}}</ion-label>
-        <ion-datetime displayFormat="MM/DD/YYYY"></ion-datetime>
+        <ion-label floating>{{ 'Date of measurement'}}</ion-label>
+        <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="measurementDate" [ngModelOptions]="{standalone: true}"></ion-datetime>
       </ion-item>
 
       <!-- Are you a producer? - Radio button: Y/N -->
-      <ion-list radio-group>
+      <ion-list radio-group [(ngModel)]="producerOrNot" [ngModelOptions]="{standalone: true}">
         <ion-list-header>
           Are you a producer?
         </ion-list-header>
-
-        <ion-item>
+        <ion-item >
           <ion-label>Yes</ion-label>
-          <ion-radio checked="true" value="1"></ion-radio>
+          <ion-radio checked="true" value="1" ></ion-radio>
         </ion-item>
 
         <ion-item>
@@ -49,18 +49,18 @@
       
       <!-- Location -->
       <ion-item>
-        <ion-label>{{ 'Location'}}</ion-label>
-        <ion-input type="text" name="location"></ion-input>
+        <ion-label floating>{{ 'Location'}}</ion-label>
+        <ion-input type="text" name="location" [(ngModel)]="location" [ngModelOptions]="{standalone: true}"></ion-input>
       </ion-item>
 
       <!-- Measurement (ppm) -->
       <ion-item>
-        <ion-label>{{ 'Measurement (ppm)'}}</ion-label>
-        <ion-input type="text" name="measurement"></ion-input>
+        <ion-label floating>{{ 'Measurement (ppm)'}}</ion-label>
+        <ion-input type="text" name="measurement" [(ngModel)]="measurement" [ngModelOptions]="{standalone: true}"></ion-input>
       </ion-item>
 
       <!-- Warning given? - Radio button: Y/N -->
-      <ion-list radio-group>
+      <ion-list radio-group [(ngModel)]="warningOrNot" [ngModelOptions]="{standalone: true}">
         <ion-list-header>
           {{ 'Warning given?'}}
         </ion-list-header>
@@ -78,13 +78,13 @@
 
       <!-- Date for follow-up -->
       <ion-item>
-        <ion-label>{{ 'Date for follow-up'}}</ion-label>
-        <ion-datetime displayFormat="MM/DD/YYYY"></ion-datetime>
+        <ion-label floating>{{ 'Date for follow-up'}}</ion-label>
+        <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="followUpDate" [ngModelOptions]="{standalone: true}"></ion-datetime>
       </ion-item>
 
       <!-- Submit button -->
       <div padding>
-        <button ion-button color="primary" block>{{ 'Send'}}</button>
+        <button ion-button color="primary" block (click)="saveMonitorData()">{{ 'Send'}}</button>
       </div>
     </ion-list>
   </form>

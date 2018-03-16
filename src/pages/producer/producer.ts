@@ -1,9 +1,15 @@
 import { Component } from '@angular/core';
+<<<<<<< HEAD
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 //import {AngularFireDatabase} from 'angularfire2/database';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 import {Toast } from '@ionic-native/toast';
 
+=======
+import { IonicPage, NavController, NavParams, Platform, App} from 'ionic-angular';
+import {AngularFireDatabase} from 'angularfire2/database';
+import { AlertController } from 'ionic-angular';
+>>>>>>> 7c7fbda0c7d9f1837c5efab04cf43eda71eff6b9
 
 /**
  * Generated class for the ProducerPage page.
@@ -50,6 +56,28 @@ export class ProducerPage {
     this.measurement7 = this.navParams.get('measurement7');
     this.measurement8 = this.navParams.get('measurement8');
 
+    platform.ready().then(() => {
+      //Registration of push in Android and Windows Phone
+      platform.registerBackButtonAction(() => {
+          let nav = this.app.getActiveNav();
+          console.log('Back is click')
+          if (nav.canGoBack()){ //Can we go back?
+              nav.popToRoot();
+          }else{
+              this.platform.exitApp(); //Exit from app
+          }
+      });
+  });
+
+  }
+  // creating alert dialog
+  alert(message: string)
+  {
+    this.alertCtrl.create({
+      title: 'Info',
+      subTitle: message,
+      buttons: ['OK']
+    }).present();
   }
 
   saveMeasurement()
@@ -70,6 +98,8 @@ export class ProducerPage {
       measurement8: this.measurement8,
     }).then(() => {
       // save data
+      this.alert("Successfully Saved");
+      this.navCtrl.push(ProducerPage);
     });
   }
   */

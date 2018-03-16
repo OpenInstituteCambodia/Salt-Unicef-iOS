@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, App} from 'ionic-angular';
 
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 import {Toast } from '@ionic-native/toast';
@@ -17,23 +17,75 @@ import {Toast } from '@ionic-native/toast';
   templateUrl: 'monitor.html',
 })
 export class MonitorPage {
+  //email: string;
+  monitorID: string ="";
+  producerID: string ="";
+  measurementDate: string ="";
+  producerOrNot: string ="";
+  location: string ="";
+  measurement: string ="";
+  warningOrNot: string ="";
+  followUpDate: string ="";
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private sqlite: SQLite, private toast: Toast) {
-    // constructor(public navCtrl: NavController, public navParams: NavParams) {
-      this.monitor_name = this.navParams.get('monitor_name');
-  this.MeasurementDate = this.navParams.get('MeasurementDate');
-  this.saltProducedToday = this.navParams.get('saltProducedToday');
-  this.potassiumUsedToday = this.navParams.get('potassiumUsedToday');
-  this.potassiumInStock = this.navParams.get('potassiumInStock');
-  this.measurement1 = this.navParams.get('measurement1');
-  this.measurement2 = this.navParams.get('measurement2');
-  this.measurement3 = this.navParams.get('measurement3');
-  this.measurement4 = this.navParams.get('measurement4');
-  this.measurement5 = this.navParams.get('measurement5');
-  this.measurement6 = this.navParams.get('measurement6');
-  this.measurement7 = this.navParams.get('measurement7');
-  this.measurement8 = this.navParams.get('measurement8');
+  constructor(private alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams, private platform: Platform, private app: App) 
+  {
+    //this.email = fire.auth.currentUser.email;
+    console.log(this.navParams);
+    // this.producer_id = this.navParams.get('producer_id');
+    this.monitorID = this.navParams.get('monitorID');
+    this.producerID = this.navParams.get('producerID');
+    this.measurementDate = this.navParams.get('measurementDate');
+    this.producerOrNot = this.navParams.get('producerOrNot');
+    this.location = this.navParams.get('location');
+    this.measurement = this.navParams.get('measurement');
+    this.warningOrNot = this.navParams.get('warningOrNot');
+    this.followUpDate = this.navParams.get('followUpDate');
+
+    platform.ready().then(() => {
+      //Registration of push in Android and Windows Phone
+      platform.registerBackButtonAction(() => {
+          let nav = this.app.getActiveNav();
+          console.log('Back is click')
+          if (nav.canGoBack()){ //Can we go back?
+              nav.popToRoot();
+          }else{
+              this.platform.exitApp(); //Exit from app
+          }
+      });
+  });
+
+
   }
+  
+  // creating alert dialog
+  alert(message: string)
+  {
+    this.alertCtrl.create({
+      title: 'Info',
+      subTitle: message,
+      buttons: ['OK']
+    }).present();
+  }
+
+  saveMonitorData()
+  {
+    this.db.list('/monitorTbl').push({
+      monitorID: this.monitorID,
+      producerID: this.producerID,
+      measurementDate: this.measurementDate,
+      producerOrNot: this.producerOrNot,
+      location: this.location,
+      measurement: this.measurement,
+      warningOrNot: this.warningOrNot,
+      followUpDate: this.followUpDate
+    })
+    .then(() => {
+      // save data
+      this.alert("Successfully Saved");
+      this.navCtrl.push(MonitorPage);
+    });
+  }
+
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MonitorPage');
