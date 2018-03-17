@@ -1,15 +1,14 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, App} from 'ionic-angular';
 
+// import { AngularFireAuth } from 'angularfire2/auth';
+// import { AngularFireDatabase } from 'angularfire2/database';
+// // import * as firebase from 'firebase/app';
+// //import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
+import { AlertController } from 'ionic-angular';
+
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 import {Toast } from '@ionic-native/toast';
-
-/**
- * Generated class for the MonitorPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -18,16 +17,18 @@ import {Toast } from '@ionic-native/toast';
 })
 export class MonitorPage {
   //email: string;
-  monitorID: string ="";
-  producerID: string ="";
+  monitorID: number=0;
+  producerID: number=0;
   measurementDate: string ="";
-  producerOrNot: string ="";
+  isAtProducer: number=0;
   location: string ="";
-  measurement: string ="";
-  warningOrNot: string ="";
+  measurement: number=0;
+  warningOrNot: number=0;
   followUpDate: string ="";
 
-  constructor(private alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams, private platform: Platform, private app: App) 
+  constructor(private alertCtrl:AlertController, private toast: Toast,
+    // private fire: AngularFireAuth,
+    public navCtrl: NavController, public navParams: NavParams, private platform: Platform, private app: App, private sqlite: SQLite) 
   {
     //this.email = fire.auth.currentUser.email;
     console.log(this.navParams);
@@ -35,7 +36,7 @@ export class MonitorPage {
     this.monitorID = this.navParams.get('monitorID');
     this.producerID = this.navParams.get('producerID');
     this.measurementDate = this.navParams.get('measurementDate');
-    this.producerOrNot = this.navParams.get('producerOrNot');
+    this.isAtProducer = this.navParams.get('isAtProducer');
     this.location = this.navParams.get('location');
     this.measurement = this.navParams.get('measurement');
     this.warningOrNot = this.navParams.get('warningOrNot');
@@ -57,6 +58,16 @@ export class MonitorPage {
 
   }
   
+  createTableMonitor(){
+    this.sqlite.create({
+      name: 'unicef_salt',
+      location: 'default'
+    }).then((db: SQLiteObject)  => {
+      db.executeSql('CREATE TABLE IF NOT EXISTS monitorTable (id INTEGER PRIMARY KEY, monitorID TEXT, producerID TEXT, measurementDate TEXT, isAtProducer INT, location TEXT, measurement INT,warningOrNot INT,followUpDate TEXT)', {})
+      .then( res => console.log('execuated SQL!'))
+      .catch(e => console.log(e));
+    })
+  }
   // creating alert dialog
   alert(message: string)
   {
@@ -69,54 +80,14 @@ export class MonitorPage {
 
   saveMonitorData()
   {
-    this.db.list('/monitorTbl').push({
-      monitorID: this.monitorID,
-      producerID: this.producerID,
-      measurementDate: this.measurementDate,
-      producerOrNot: this.producerOrNot,
-      location: this.location,
-      measurement: this.measurement,
-      warningOrNot: this.warningOrNot,
-      followUpDate: this.followUpDate
-    })
-    .then(() => {
-      // save data
-      this.alert("Successfully Saved");
-      this.navCtrl.push(MonitorPage);
-    });
-  }
-
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad MonitorPage');
-    this.createTable();
-  }
-
-  createTable(){
     this.sqlite.create({
       name: 'unicef_salt',
       location: 'default'
     }).then((db: SQLiteObject)  => {
-      db.executeSql('CREATE TABLE IF NOT EXISTS monitorTable (id INTEGER PRIMARY KEY, followUpDate TEXT, location TEXT, measurement INT, measurementDate TEXT, monitorID INT, producerID INT, isProducer INT,isWarning INT)', {})
-      .then( res => console.log('execuated SQL'))
-      .catch(e => console.log(e));
-    })
-  }
-
-  saveMeasurementMonitor(){
-    this.toast.show('Button Clicked !', '5000', 'center').subscribe(
-      toast => {
-        this.navCtrl.popToRoot();
-      }
-    );
-    this.sqlite.create({
-      name: 'unicef_salt',
-      location: 'default'
-    }).then((db: SQLiteObject)  => {
-      db.executeSql(' INSERT INTO producerTable (producerName, measurementDate, potassiumInStock, potassiumUsedToday, saltProducedToday, measurment1, measurment2,measurment3,measurment4,measurment5,measurment6,measurment7, measurment8) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)', [this.producerName, this.MeasurementDate,this.potassiumInStock, this.potassiumUsedToday,this.saltProducedToday,this.measurement1, this.measurement2, this.measurement3, this.measurement4, this.measurement5, this.measurement6, this.measurement7, this.measurement8])
+      db.executeSql(' INSERT INTO monitorTable (monitorID, producerID, measurementDate, isAtProducer, location, measurement, warningOrNot,followUpDate) VALUES(?,?,?,?,?,?,?,?)', [this.monitorID, this.producerID,this.measurementDate, this.isAtProducer,this.location,this.measurement, this.warningOrNot, this.followUpDate])
       .then( res => {
         console.log('Data Inserted !');
-        this.toast.show('Data saved', '5000', 'center').subscribe(
+        this.toast.show('Monitor Data has been saved!', '5000', 'center').subscribe(
           toast => {
             this.navCtrl.popToRoot();
           }
@@ -124,6 +95,12 @@ export class MonitorPage {
       })
       .catch(e => console.log(e));
     })
+  }
+
+
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad MonitorPage');
+    this.createTableMonitor();
   }
 
 }

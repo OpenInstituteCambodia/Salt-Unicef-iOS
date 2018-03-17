@@ -10,13 +10,13 @@
     <ion-list>
       <!-- Monitor -->      
       <ion-item>
-        <ion-label floating>{{ 'Monitor'}}</ion-label>
+        <ion-label >{{ 'Monitor'}}</ion-label>
         <ion-input type="text" [(ngModel)]="monitorID" [ngModelOptions]="{standalone: true}"></ion-input>
       </ion-item>
 
       <!-- Producer - Select Option -->
       <ion-item>
-        <ion-label floating>Producer</ion-label>
+        <ion-label >Producer</ion-label>
         <ion-select [(ngModel)]="producerID" [ngModelOptions]="{standalone: true}">
           <ion-option value="producer_1">Producer 1</ion-option>
           <ion-option value="producer_2">Producer 2</ion-option>
@@ -27,14 +27,14 @@
 
       <!-- Date of measurement -->
       <ion-item>
-        <ion-label floating>{{ 'Date of measurement'}}</ion-label>
+        <ion-label >{{ 'Date of measurement'}}</ion-label>
         <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="measurementDate" [ngModelOptions]="{standalone: true}"></ion-datetime>
       </ion-item>
 
       <!-- Are you a producer? - Radio button: Y/N -->
-      <ion-list radio-group [(ngModel)]="producerOrNot" [ngModelOptions]="{standalone: true}">
+      <ion-list radio-group [(ngModel)]="isAtProducer" [ngModelOptions]="{standalone: true}">
         <ion-list-header>
-          Are you a producer?
+          At producer?
         </ion-list-header>
         <ion-item >
           <ion-label>Yes</ion-label>
@@ -49,18 +49,18 @@
       
       <!-- Location -->
       <ion-item>
-        <ion-label floating>{{ 'Location'}}</ion-label>
+        <ion-label >{{ 'Location'}}</ion-label>
         <ion-input type="text" name="location" [(ngModel)]="location" [ngModelOptions]="{standalone: true}"></ion-input>
       </ion-item>
 
       <!-- Measurement (ppm) -->
       <ion-item>
-        <ion-label floating>{{ 'Measurement (ppm)'}}</ion-label>
-        <ion-input type="text" name="measurement" [(ngModel)]="measurement" [ngModelOptions]="{standalone: true}"></ion-input>
+        <ion-label >{{ 'Measurement (ppm)'}}</ion-label>
+        <ion-input type="number" name="measurement" [(ngModel)]="measurement" [ngModelOptions]="{standalone: true}" ></ion-input>
       </ion-item>
 
       <!-- Warning given? - Radio button: Y/N -->
-      <ion-list radio-group [(ngModel)]="warningOrNot" [ngModelOptions]="{standalone: true}">
+      <ion-list radio-group [(ngModel)]="warningOrNot" [ngModelOptions]="{standalone: true}"  >
         <ion-list-header>
           {{ 'Warning given?'}}
         </ion-list-header>
@@ -78,7 +78,7 @@
 
       <!-- Date for follow-up -->
       <ion-item>
-        <ion-label floating>{{ 'Date for follow-up'}}</ion-label>
+        <ion-label >{{ 'Date for follow-up'}}</ion-label>
         <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="followUpDate" [ngModelOptions]="{standalone: true}"></ion-datetime>
       </ion-item>
 

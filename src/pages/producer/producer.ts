@@ -1,15 +1,9 @@
 import { Component } from '@angular/core';
-<<<<<<< HEAD
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 //import {AngularFireDatabase} from 'angularfire2/database';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 import {Toast } from '@ionic-native/toast';
 
-=======
-import { IonicPage, NavController, NavParams, Platform, App} from 'ionic-angular';
-import {AngularFireDatabase} from 'angularfire2/database';
-import { AlertController } from 'ionic-angular';
->>>>>>> 7c7fbda0c7d9f1837c5efab04cf43eda71eff6b9
 
 /**
  * Generated class for the ProducerPage page.
@@ -141,11 +135,11 @@ export class ProducerPage {
   }
 
   saveMeasurement(){
-    this.toast.show('Button Clicked !', '5000', 'center').subscribe(
-      toast => {
-        this.navCtrl.popToRoot();
-      }
-    );
+    // this.toast.show('Button Clicked !', '5000', 'center').subscribe(
+    //   toast => {
+    //     this.navCtrl.popToRoot();
+    //   }
+    // );
     this.sqlite.create({
       name: 'unicef_salt',
       location: 'default'
