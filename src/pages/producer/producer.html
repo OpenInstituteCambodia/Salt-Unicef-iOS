@@ -86,10 +86,37 @@
         <ion-input type="number" name="measurement_8"  [(ngModel)]="measurement8"  [ngModelOptions]="{standalone: true}"></ion-input>
       </ion-item>
 
+      <!-- Measurement 7 (ppm) -->
+      <ion-item>
+        <ion-label >{{ 'Measurement 7 (ppm)'}}</ion-label>
+        <ion-input type="text" name="email"   [(ngModel)]="userData.email"  [ngModelOptions]="{standalone: true}" ></ion-input>
+      </ion-item>
+      
+      <!-- Measurement 8 (ppm) -->
+      <ion-item>
+        <ion-label >{{ 'Measurement 8 (ppm)'}}</ion-label>
+        <ion-input type="number" name="pwd"   [(ngModel)]="userData.pwd"  [ngModelOptions]="{standalone: true}"></ion-input>
+      </ion-item>
+
+      
+
       <!-- Submit button -->
       <div padding>
-        <button ion-button color="primary" block (click)="saveMeasurement()">{{ 'Send'}}</button>
+        <button ion-button color="primary" block (click)="producerFormSendData()">{{ 'Send'}}</button>
       </div>
+
+      <div padding>
+        <button ion-button color="primary" block (click)="retrieveDB()">
+          {{ 'retrieveDB'}}
+        </button>
+      </div>
+
+      <div padding>
+        <button ion-button color="primary" block (click)="signIn()">{{ 'Login'}}</button>
+      </div>
+
+      
+
     </ion-list>
   </form>
 </ion-content>

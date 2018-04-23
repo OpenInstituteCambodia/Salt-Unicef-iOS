@@ -11,23 +11,23 @@
     <ion-list>
       <ion-item>
         <ion-label floating>{{ 'Username'}}</ion-label>
-        <ion-input type="text" #username></ion-input>
+        <ion-input type="text" value="" [(ngModel)]="userData.email" [ngModelOptions]="{standalone: true}"></ion-input>
       </ion-item>
       
       <ion-item>
         <ion-label floating>{{ 'Password'}}</ion-label>
-        <ion-input type="password" #password></ion-input>
+        <ion-input type="password"  value="" [(ngModel)]="userData.pwd" [ngModelOptions]="{standalone: true}"></ion-input>
       </ion-item>
 
       <div padding>
-        <button ion-button color="primary" block (click)="openProducerPage()">
+        <button ion-button color="primary" block (click)="signIn()">
           {{ 'Login'}}
         </button>
       </div>
     </ion-list>
   </form>
   
-  <!-- <div padding>
+  <div padding>
     <button ion-button color="primary" block (click)="openProducerPage()">
       {{ 'Producer'}}
     </button>
@@ -36,7 +36,6 @@
     <button ion-button color="primary" block (click)="openMonitorPage()">
       {{ 'Monitor'}}
     </button>
-  </div> -->
-
-  
+  </div>
+   
 </ion-content>

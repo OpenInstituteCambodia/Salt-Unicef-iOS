@@ -16,6 +16,9 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { FormsModule } from '@angular/forms';
 import { SQLite } from '@ionic-native/sqlite';
 import { Toast } from '@ionic-native/toast';
+import { HttpModule} from '@angular/http';
+import { AuthServiceProvider } from '../providers/auth-service/auth-service';
+import { Network } from '@ionic-native/network';
 
 // Initialize Firebase -- phyrum 
 const config = {
@@ -47,11 +50,12 @@ const config = {
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-  // AngularFirestoreModule, // imports firebase/firestore, only needed for database features
-  AngularFireAuthModule, // imports firebase/auth, only needed for auth feature
-  AngularFireModule.initializeApp(config),
+    // AngularFirestoreModule, // imports firebase/firestore, only needed for database features
+    AngularFireAuthModule, // imports firebase/auth, only needed for auth feature
+    AngularFireModule.initializeApp(config),
     AngularFireDatabaseModule,
-    FormsModule
+    FormsModule,
+    HttpModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -65,7 +69,9 @@ const config = {
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     SQLite,
-    Toast
+    Toast,
+    AuthServiceProvider,
+    Network
   ]
 })
 export class AppModule {}
