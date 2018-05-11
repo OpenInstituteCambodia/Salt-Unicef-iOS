@@ -8,6 +8,7 @@ import { MyApp } from './app.component';
 import { LoginPage } from '../pages/login/login';
 import { ProducerPage } from '../pages/producer/producer';
 import { MonitorPage } from '../pages/monitor/monitor';
+import { HomePage } from '../pages/home/home';
 // Firebase
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
@@ -45,7 +46,8 @@ const config = {
     MyApp,
     LoginPage,
     ProducerPage,
-    MonitorPage
+    MonitorPage,
+    HomePage
   ],
   imports: [
     BrowserModule,
@@ -62,7 +64,8 @@ const config = {
     MyApp,
     LoginPage,
     ProducerPage,
-    MonitorPage
+    MonitorPage,
+    HomePage
   ],
   providers: [
     StatusBar,
