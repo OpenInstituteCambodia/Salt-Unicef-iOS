@@ -4,7 +4,7 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content padding  class="content">
   <!-- Hi {{ email }} -->
   <form>
     <ion-list>
@@ -17,18 +17,15 @@
       <!-- Producer - Select Option -->
       <ion-item>
         <ion-label >Producer</ion-label>
-        <ion-select [(ngModel)]="monitorMeasurementData.facility_id" [ngModelOptions]="{standalone: true}">
-          <ion-option value="producer_1">Producer 1</ion-option>
-          <ion-option value="producer_2">Producer 2</ion-option>
-          <ion-option value="producer_3">Producer 3</ion-option>
-          <ion-option value="producer_4">Producer 4</ion-option>
+        <ion-select [(ngModel)]="selectedFacilityId" [ngModelOptions]="{standalone: true}">
+          <ion-option *ngFor="let item of list_facilities" [value]="item.id">{{item.facility_name}}</ion-option>
         </ion-select>
       </ion-item>
 
       <!-- Date of measurement -->
       <ion-item>
         <ion-label >{{ 'Date of measurement'}}</ion-label>
-        <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="monitorMeasurementData.date_of_visit" [ngModelOptions]="{standalone: true}"></ion-datetime>
+        <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="monitorMeasurementData.date_of_visit" [ngModelOptions]="{standalone: true}"  [max]="currentDate"></ion-datetime>
       </ion-item>
 
       <!-- Are you a producer? - Radio button: Y/N -->
@@ -79,7 +76,7 @@
       <!-- Date for follow-up -->
       <ion-item>
         <ion-label >{{ 'Date for follow-up'}}</ion-label>
-        <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="monitorMeasurementData.date_of_follow_up" [ngModelOptions]="{standalone: true}"></ion-datetime>
+        <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="monitorMeasurementData.date_of_follow_up" [ngModelOptions]="{standalone: true}" [min]="currentDate"></ion-datetime>
       </ion-item>
 
       <!-- Submit button -->

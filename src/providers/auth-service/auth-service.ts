@@ -32,5 +32,18 @@ export class AuthServiceProvider {
       
     });
   }
+
+  getData(type){
+    return new Promise((resolve, reject) => {
+      let headers = new Headers();
+      this.http.get(apiUrl+type, {headers: headers})
+      .subscribe(res => {
+        resolve(res.json());
+      }, (err) => {
+        reject(err);
+      });
+      
+    });
+  }
  
 }
