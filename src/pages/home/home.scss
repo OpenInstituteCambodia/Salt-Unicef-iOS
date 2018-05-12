@@ -1,0 +1,51 @@
+page-home {
+  .scroll-content {
+    padding: 20px;
+    margin: 10px;
+  }
+  .label1{
+    font-size: 30px;
+    text-align: center;
+  }
+  .label2{
+    font-size: 22px;
+    text-align: center;
+  }
+
+  .btnQuiz{
+    // padding-top: 5%;
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    [ion-button]{
+      height: 100px;
+      font-size: 18px;
+    }
+  }
+  .btnReview{
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    [ion-button]{
+      height: 100px;
+      font-size: 1.6em;
+    }
+  }
+  .label3{
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    .card-md {
+      height: 100px;
+    }
+    .card-content-md {
+      padding: 0;
+      font-size: 1.6rem;
+      text-align: center;
+      justify-content: center;
+      vertical-align: middle;
+    }
+  }
+}
+
+
