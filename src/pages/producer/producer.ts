@@ -7,6 +7,7 @@ import { Network } from '@ionic-native/network';
 import { Http } from '@angular/http';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import async from 'async';
+import { HomePage } from '../home/home';
 
 // declare var navigator: any;
 // declare var Connection: any; 
@@ -65,6 +66,8 @@ export class ProducerPage {
   measurement8: string = '';
   userId: string = '';
   currentDate : any;
+  listOfAllTable = ["monitor_measurements","producer_measurements"];
+  hasOffline:number;
 
   // Update on 12-03-2018 by Samak //
   constructor(
@@ -96,6 +99,7 @@ export class ProducerPage {
     this.measurement7 = this.navParams.get('measurement7');
     this.measurement8 = this.navParams.get('measurement8');
     this.http = http;
+    
 
     let connectSubscription = this.network.onConnect().subscribe(() => {
       console.log('network connected!');
@@ -155,12 +159,20 @@ export class ProducerPage {
           {
             this.toast.show('Data saved offline', '5000', 'center').subscribe(
               toast => {
-                this.navCtrl.popToRoot();
+                this.goToHomePage();
               }
             );
           }
           else
-            this.synchDataToServerUseService();  
+          {
+            this.toast.show('Producer Data has sent to Server!', '200', 'center').subscribe(
+              toast => {
+                this.synchDataToServerUseService();
+                this.goToHomePage();
+              }
+            );
+          }
+              
         })
         .catch(e => console.log(e));
     })
@@ -195,6 +207,7 @@ export class ProducerPage {
       // prior to doing any api requests as well.
       setTimeout(() => {
         this.synchDataToServerUseService();
+        this.hasOfflineData(this.listOfAllTable);
         connectSubscription.unsubscribe();
       }, 0);
     });
@@ -273,6 +286,7 @@ export class ProducerPage {
           if (JSON.parse(result["code"]) == 200) {
             // If data is synch successfully, update isSent=1 //
             self.updateIsSentColumn();
+            //this.hasOfflineData(listOfTable);
             console.log("Data Inserted Successfully");
           }
           else
@@ -389,9 +403,8 @@ export class ProducerPage {
 
               _data[tableName].push(obj);
               console.log('_data = ' + JSON.stringify(_data));
-
-              callback(null, _data);
             }
+            callback(null, _data);
           } catch (err) {
             console.error(err);
           }
@@ -414,6 +427,7 @@ export class ProducerPage {
           console.error(err);
         } else {
           resolve(data_return);
+          self.hasOfflineData(listOfTable);
           console.log(JSON.stringify(data_return));
         }
       });
@@ -508,5 +522,40 @@ export class ProducerPage {
     return pro;
 
   }
+
+  goToHomePage(){
+    this.navCtrl.push(HomePage);
+    this.hasOfflineData(this.listOfAllTable);
+  }
+
+  hasOfflineData(listOfAllTable: string[])
+  {
+  
+    console.log("listOfAllTable.length= "+listOfAllTable.length);
+    for (var tableName of listOfAllTable) {
+      try {
+        this.sqlite.create({
+          name: 'unicef_salt',
+          location: 'default'
+        }).then((db: SQLiteObject) => {
+          db.executeSql('SELECT count(*) as total FROM '+ tableName +' where isSent=?', [0])
+            .then(res => {
+              let num_offline_records = res.rows.item(0).total;
+              console.log("res = "+ JSON.stringify(res));
+              console.log('num_offline_records = '+' of '+tableName +' = '+num_offline_records);
+              if(num_offline_records>0)
+              {
+                localStorage.setItem("offline",(num_offline_records-1).toString());
+              }
+              
+            })
+            .catch(e => console.log(e));
+        })
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  }
+  
 } // End class
 

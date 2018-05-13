@@ -12,6 +12,8 @@ import { Toast } from '@ionic-native/toast';
 import async from 'async';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { Network } from '@ionic-native/network';
+import { HomePage } from '../home/home';
+import { ProducerPage} from '../producer/producer';
 
 
 @IonicPage()
@@ -34,6 +36,8 @@ export class MonitorPage {
   list_facilities = this.listOfFacilities();
   selectedFacilityId = null;
   currentDate: any;
+  listOfAllTable = ["monitor_measurements","producer_measurements"];
+  hasOffline:number;
 
   constructor(private network: Network,
     private alertCtrl: AlertController,
@@ -49,6 +53,8 @@ export class MonitorPage {
     var localStorage_userData = JSON.parse(localStorage.getItem("userData"));
     console.log("userData = " + JSON.stringify(localStorage_userData));
     this.monitorMeasurementData.monitor_id = localStorage_userData.id;
+    this.monitorMeasurementData.facility_id = this.selectedFacilityId;
+    console.log("this.monitorMeasurementData.facility_id = " + JSON.stringify(this.monitorMeasurementData.facility_id));
     this.monitor_name = localStorage_userData.name;
     //console.log("this.monitorMeasurementData.monitor_id = "+this.monitorMeasurementData.monitor_id);
     //this.listOfFacilities();
@@ -103,7 +109,7 @@ export class MonitorPage {
       location: 'default'
     }).then((db: SQLiteObject) => {
       db.executeSql(' INSERT INTO monitor_measurements (monitor_id, facility_id, at_producer_site, location, latitude, longitude, measurement, warning,date_of_visit,date_of_follow_up, isSent) VALUES(?,?,?,?,?,?,?,?,?,?,?)',
-        [this.monitorMeasurementData.monitor_id, this.monitorMeasurementData.facility_id, this.monitorMeasurementData.at_producer_site, this.monitorMeasurementData.location, this.monitorMeasurementData.latitude, this.monitorMeasurementData.longitude,
+        [this.monitorMeasurementData.monitor_id, this.selectedFacilityId, this.monitorMeasurementData.at_producer_site, this.monitorMeasurementData.location, this.monitorMeasurementData.latitude, this.monitorMeasurementData.longitude,
         this.monitorMeasurementData.measurement, this.monitorMeasurementData.warning, this.monitorMeasurementData.date_of_visit, this.monitorMeasurementData.date_of_follow_up, 0])
         .then(res => {
           console.log('Data Inserted !');
@@ -111,12 +117,21 @@ export class MonitorPage {
           {
             this.toast.show('Monitor Data has been saved offline!', '5000', 'center').subscribe(
               toast => {
-                this.navCtrl.popToRoot();
+                this.goToHomePage();
               }
             );
           }
           else
-            this.synchMonitorDataToServerUseService();   
+          {
+            this.toast.show('Monitor Data has sent to Server!', '200', 'center').subscribe(
+              toast => {
+                this.synchMonitorDataToServerUseService();   
+                //this.navCtrl.popToRoot();
+                this.goToHomePage();
+              }
+            );
+            
+          }
         })
         .catch(e => console.log(e));
     })
@@ -125,6 +140,7 @@ export class MonitorPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MonitorPage');
+    console.log("userData = " + JSON.stringify(localStorage.getItem("userData")));
     this.createTableMonitor();
   }
 
@@ -197,8 +213,9 @@ export class MonitorPage {
               _data[tableName].push(obj);
               console.log('_data = ' + JSON.stringify(_data));
 
-              callback(null, _data);
+              
             }
+            callback(null, _data);
           } catch (err) {
             console.error(err);
           }
@@ -281,4 +298,38 @@ export class MonitorPage {
         .catch(e => console.log(e));
     })
   }
+
+  goToHomePage(){
+    this.navCtrl.push(HomePage);
+    this.hasOfflineData(this.listOfAllTable);
+  }
+
+  hasOfflineData(listOfAllTable: string[])
+  {
+  
+    console.log("listOfAllTable.length= "+listOfAllTable.length);
+    for (var tableName of listOfAllTable) {
+      try {
+        this.sqlite.create({
+          name: 'unicef_salt',
+          location: 'default'
+        }).then((db: SQLiteObject) => {
+          db.executeSql('SELECT count(*) as total FROM '+ tableName +' where isSent=?', [0])
+            .then(res => {
+              let num_offline_records = res.rows.item(0).total;
+              console.log('num_offline_records = '+' of '+tableName +' = '+num_offline_records);
+              if(num_offline_records>0)
+              {
+                localStorage.setItem("offline",(num_offline_records-1).toString());
+              }
+              
+            })
+            .catch(e => console.log(e));
+        })
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  }
+  
 }

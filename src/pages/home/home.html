@@ -18,8 +18,8 @@
     <ion-label class="label1">
       NSCIDD
     </ion-label>
-    <ion-label class="label2">
-      Salt Iodization quality control
+    <ion-label class="label1">
+      Salt Iodization Quality Control
     </ion-label>
   </div>
   <div class="btnQuiz" >
@@ -28,17 +28,19 @@
     </button>
   </div>
   <div class="btnReview">
-    <button ion-button class="btn btn-primary btn-lg btn3d" block color="primary" (click)="exit()">
+    <button ion-button class="btn btn-primary btn-lg btn3d" block color="primary" (click)="exitButtonClick()">
       Exit
     </button>
   </div>
 
   <div class="label3">
-    <ion-card no-padding>
-      <ion-card-content>
-        Information stored in your phone will be sent when you access to internet
-      </ion-card-content>
-    </ion-card>
+    <span  [hidden]="hasOffline<0">
+      <ion-card >
+        <ion-card-content>
+          Offline records stored in your phone will be sent when you access to Internet.
+        </ion-card-content>
+      </ion-card>
+  </span>
   </div>
 
 
