@@ -21,7 +21,7 @@ import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 export class HomePage {
   localStorage_userData : any;
   userRole:number;
-  hasOffline:any;
+  hasOffline:any=0;
   hasOfflineTest: any;
   listOfAllTable = ["monitor_measurements","producer_measurements"];
   constructor(public navCtrl: NavController, 
@@ -42,8 +42,9 @@ export class HomePage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad HomePage');
     
-    this.hasOfflineData(this.listOfAllTable);
+    //this.hasOfflineData(this.listOfAllTable);
     this.hasOffline= localStorage.getItem("offline");
+    console.log('hasOffline in ionViewDidLoad = '+this.hasOffline);
   }
 
   ionViewWillEnter()  {
@@ -106,10 +107,13 @@ export class HomePage {
           db.executeSql('SELECT count(*) as total FROM '+ tableName +' where isSent=?', [0])
             .then(res => {
               let num_offline_records = res.rows.item(0).total;
-              console.log('num_offline_records = '+' of '+tableName +' = '+num_offline_records);
+              
               if(num_offline_records>0)
               {
-                localStorage.setItem("offline",(num_offline_records-1).toString());
+                //localStorage.setItem("offline",(num_offline_records-1).toString());
+                console.log('num_offline_records = '+' of '+tableName +' = '+num_offline_records);
+                this.hasOffline = num_offline_records;
+                console.log('this.hasOffline = ' + this.hasOffline);
               }
               
             })

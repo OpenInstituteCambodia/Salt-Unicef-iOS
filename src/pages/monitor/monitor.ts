@@ -77,7 +77,7 @@ export class MonitorPage {
       // before we determine the connection type. Might need to wait.
       // prior to doing any api requests as well.
       setTimeout(() => {
-        alert("Connected");
+        //alert("Connected");
         this.synchMonitorDataToServerUseService();
         connectSubscription.unsubscribe();
       }, 0);
@@ -117,6 +117,7 @@ export class MonitorPage {
           {
             this.toast.show('Monitor Data has been saved offline!', '5000', 'center').subscribe(
               toast => {
+                this.hasOfflineData(this.listOfAllTable);
                 this.goToHomePage();
               }
             );
@@ -256,6 +257,7 @@ export class MonitorPage {
           if (JSON.parse(result["code"]) == 200) {
             // If data is synch successfully, update isSent=1 //
             self.updateIsSentColumn();
+            self.hasOfflineData(listOfTable);
             console.log("Data Inserted Successfully");
           }
           else
@@ -301,7 +303,7 @@ export class MonitorPage {
 
   goToHomePage(){
     this.navCtrl.push(HomePage);
-    this.hasOfflineData(this.listOfAllTable);
+    //this.hasOfflineData(this.listOfAllTable);
   }
 
   hasOfflineData(listOfAllTable: string[])
@@ -314,13 +316,21 @@ export class MonitorPage {
           name: 'unicef_salt',
           location: 'default'
         }).then((db: SQLiteObject) => {
-          db.executeSql('SELECT count(*) as total FROM '+ tableName +' where isSent=?', [0])
+          //db.executeSql('SELECT count(isSent) as totalCount FROM '+ tableName +' where isSent=?', [0])
+          db.executeSql('SELECT sum(case when isSent=0 then 1 else 0 end) as totalCount FROM monitor_measurements' , [])
             .then(res => {
-              let num_offline_records = res.rows.item(0).total;
-              console.log('num_offline_records = '+' of '+tableName +' = '+num_offline_records);
+              console.log("res = "+JSON.stringify(res));
+              var num_offline_records = res.rows.item(0).totalCount;
+              localStorage.setItem("offline",(num_offline_records).toString());
+              console.log('num_offline_records before if = '+' of '+tableName +' = '+num_offline_records);
               if(num_offline_records>0)
               {
-                localStorage.setItem("offline",(num_offline_records-1).toString());
+                localStorage.setItem("offline",(num_offline_records).toString());
+                console.log('num_offline_records in if = '+' of '+tableName +' = '+num_offline_records);
+                //this.hasOffline = num_offline_records;
+                console.log('offline in localStorage = ' + localStorage.getItem("offline"));
+                console.log('toStr of 1 = ' + (1).toString());
+                console.log('toStr of 2 = ' + (2).toString());
               }
               
             })
