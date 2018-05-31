@@ -29,5 +29,12 @@ page-producer {
       .col{
         border: white;
       }
+      ion-content{
+        ion-input>input{
+          text-align: center !important;
+          font-weight: bold;
+        }
+      }
+      
 
 }

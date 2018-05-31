@@ -30,4 +30,14 @@ page-monitor {
         border: none;
       }
 
+      .myCustomSelect{
+        max-width: 100% !important;
+      }
+
+      ion-content{
+        ion-input>input{
+          font-weight: bold;
+        }
+      }
+
 }

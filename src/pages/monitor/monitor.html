@@ -1,49 +1,49 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Monitor</ion-title>
+    <ion-title>Salt Monitoring Report</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding  class="content">
   <!-- Hi {{ email }} -->
-  <form>
+  <form [formGroup]="monitorValidate">
     <ion-list>
       <!-- Monitor -->      
       <ion-item>
         <ion-label >{{ 'Monitor'}}</ion-label>
-        <ion-input type="text" [(ngModel)]="monitor_name" [ngModelOptions]="{standalone: true}"></ion-input>
+        <ion-input type="text" [(ngModel)]="monitor_name"  disabled="true" formControlName="monitorName"></ion-input>
       </ion-item>
 
       <!-- Producer - Select Option -->
       <ion-item>
-        <ion-label >Producer</ion-label>
-        <ion-select [(ngModel)]="selectedFacilityId" value="selectedFacilityId" [ngModelOptions]="{standalone: true}">
+        <ion-label >Producer*</ion-label>
+        <ion-select [(ngModel)]="selectedFacilityId" value="selectedFacilityId"  formControlName="facilityId" class="myCustomSelect">
           <ion-option *ngFor="let item of list_facilities" [value]="item.id" >{{item.facility_name}}</ion-option>
         </ion-select>
       </ion-item>
 
       <!-- Date of measurement -->
       <ion-item>
-        <ion-label >{{ 'Date of measurement'}}</ion-label>
-        <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="monitorMeasurementData.date_of_visit" [ngModelOptions]="{standalone: true}"  [max]="currentDate"></ion-datetime>
+        <ion-label >{{ 'Date of measurement'}}*</ion-label>
+        <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="monitorMeasurementData.date_of_visit"  formControlName="measureDate"  [max]="currentDate"></ion-datetime>
       </ion-item>
 
-      <ion-row radio-group [(ngModel)]="monitorMeasurementData.at_producer_site" [ngModelOptions]="{standalone: true}">
+      <ion-row radio-group [(ngModel)]="monitorMeasurementData.at_producer_site"  formControlName="atProducer">
         <ion-col>
           <ion-item>
-            At producer? 
+            At producer? *
           </ion-item>
         </ion-col>
         <ion-col>
           <ion-item>
             <ion-label>Yes</ion-label>
-            <ion-radio checked value="1"></ion-radio>
+            <ion-radio checked value="1" (ionSelect)="atProducerSelect(1)"></ion-radio>
           </ion-item>
         </ion-col>
         <ion-col>
           <ion-item>
            <ion-label>No</ion-label>
-            <ion-radio value="0"></ion-radio>
+            <ion-radio value="0" (ionSelect)="atProducerSelect(0)"></ion-radio>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -51,21 +51,21 @@
       <!-- Location -->
       <ion-item>
         <ion-label >{{ 'Location'}}</ion-label>
-        <ion-input type="text" name="location" [(ngModel)]="monitorMeasurementData.location" [ngModelOptions]="{standalone: true}"></ion-input>
+        <ion-input  type="text" name="location" [(ngModel)]="monitorMeasurementData.location" [ngModelOptions]="{standalone: true}" [disabled]="locDisabled"></ion-input>
       </ion-item>
 
       <!-- Measurement (ppm) -->
       <ion-item>
-        <ion-label >{{ 'Measurement (ppm)'}}</ion-label>
-        <ion-input type="number" name="measurement" [(ngModel)]="monitorMeasurementData.measurement" [ngModelOptions]="{standalone: true}" ></ion-input>
+        <ion-label >{{ 'Measurement (ppm)'}}*</ion-label>
+        <ion-input type="number" name="measurement" [(ngModel)]="monitorMeasurementData.measurement"  formControlName="measure" ></ion-input>
       </ion-item>
 
       <!-- Warning given? - Radio button: Y/N -->
 
-      <ion-row radio-group [(ngModel)]="monitorMeasurementData.warning" [ngModelOptions]="{standalone: true}"  >
+      <ion-row radio-group [(ngModel)]="monitorMeasurementData.warning"  formControlName="warning">
         <ion-col>
           <ion-item>
-            {{ 'Warning given?'}} 
+            Warning given? *
           </ion-item>
         </ion-col>
         <ion-col>
@@ -83,8 +83,8 @@
       </ion-row>
             <!-- Date for follow-up -->
       <ion-item>
-        <ion-label >{{ 'Date for follow-up'}}</ion-label>
-        <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="monitorMeasurementData.date_of_follow_up" [ngModelOptions]="{standalone: true}" [min]="currentDate"></ion-datetime>
+        <ion-label >{{ 'Date for follow-up'}}*</ion-label>
+        <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="monitorMeasurementData.date_of_follow_up" [min]="currentDate"   formControlName="dateFollowUp"></ion-datetime>
       </ion-item>
 
       <!-- Submit button -->

@@ -1,22 +1,22 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Login
+      User Login
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding class="content">
-  <form>
+  <form [formGroup]="loginValidate">
     <ion-list>
       <ion-item>
-        <ion-label floating>{{ 'Username'}}</ion-label>
-        <ion-input type="text" value="" [(ngModel)]="userData.email" [ngModelOptions]="{standalone: true}"></ion-input>
+        <ion-label floating class="invalid">{{ 'Username'}}</ion-label>
+        <ion-input type="text" value="" [(ngModel)]="userData.email" formControlName="usr"></ion-input>
       </ion-item>
       
       <ion-item>
-        <ion-label floating>{{ 'Password'}}</ion-label>
-        <ion-input type="password"  value="" [(ngModel)]="userData.pwd" [ngModelOptions]="{standalone: true}"></ion-input>
+        <ion-label floating  class="invalid">{{ 'Password'}}</ion-label>
+        <ion-input type="password"  value="" [(ngModel)]="userData.pwd" formControlName="pwd"></ion-input>
       </ion-item>
 
       <div padding>

@@ -5,6 +5,15 @@
 // roboto, and noto sans fonts
 $font-path: "../assets/fonts";
 
+$toast-md-background: #000;
+$toast-md-title-color: #fff;
+$toast-md-title-font-size: 2.0rem;
+$toast-md-title-padding-bottom:20px;
+
+$toast-ios-background: #000;
+$toast-ios-title-color: #fff;
+$toast-ios-title-font-size: 2.0rem;
+$toast-ios-title-padding-bottom:2.0rem;
 
 // The app direction is used to include
 // rtl styles in your app. For more info, please see:

@@ -1,47 +1,46 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Producer</ion-title>
+    <ion-title>Daily Report</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding  class="content">
-  <form>
+  <form [formGroup]="producerValidate">
     <ion-list>
 
       <!-- producer -->
       <ion-item>
-        <ion-label >{{ 'Producer'}}</ion-label>
-        <ion-input type="text" name="producer_name" [(ngModel)]="producerName" [ngModelOptions]="{standalone: true}"></ion-input>
+        <ion-input type="text" name="producer_name" [(ngModel)]="producerName" [ngModelOptions]="{standalone: true}"  disabled="true" class="proName"></ion-input>
       </ion-item>
 
       <!-- Date of Measurement -->
       <ion-item>
-        <ion-label >{{ 'Date of measurement'}}</ion-label>
-        <ion-datetime displayFormat="MM/DD/YYYY"  [(ngModel)]="MeasurementDate" [ngModelOptions]="{standalone: true}" [max]="currentDate"></ion-datetime>
+        <ion-label >{{ 'Date of measurement'}}*</ion-label>
+        <ion-datetime displayFormat="MM/DD/YYYY"  [(ngModel)]="MeasurementDate" [max]="currentDate"  formControlName="measureDate"></ion-datetime>
       </ion-item>
 
       <!-- Salt produced today (Kg) -->              
       <ion-item>
-        <ion-label >{{ 'Salt produced today (Kg)'}}</ion-label>
-        <ion-input type="number" name="salt_per_day"  [(ngModel)]="saltProducedToday" [ngModelOptions]="{standalone: true}"></ion-input>
+        <ion-label >{{ 'Salt produced today (Kg)'}}*</ion-label>
+        <ion-input type="number" name="salt_per_day"  [(ngModel)]="saltProducedToday" formControlName="saltProDaily"></ion-input>
       </ion-item>
 
       <!-- Potassium used today (Kg) -->       
       <ion-item>
-        <ion-label >{{ 'Potassium used today (Kg)'}}</ion-label>
-        <ion-input type="number" name="potassium_per_day"  [(ngModel)]="potassiumUsedToday" [ngModelOptions]="{standalone: true}"></ion-input>
+        <ion-label >{{ 'Potassium used today (Kg)'}}*</ion-label>
+        <ion-input type="number" name="potassium_per_day"  [(ngModel)]="potassiumUsedToday" formControlName="potassiumDaily"></ion-input>
       </ion-item>
 
       <!-- Potassium in stock (Kg) -->
       <ion-item>
-        <ion-label >{{ 'Potassium in stock (Kg)'}}</ion-label>
-        <ion-input type="number" name="potassium_in_stock"  [(ngModel)]="potassiumInStock"  [ngModelOptions]="{standalone: true}"></ion-input>
+        <ion-label >{{ 'Potassium in stock (Kg)'}}*</ion-label>
+        <ion-input type="number" name="potassium_in_stock"  [(ngModel)]="potassiumInStock" formControlName="potassiumStock"></ion-input>
       </ion-item>
 
       <!-- Measurement 1 (ppm) -->
       <ion-item>
-        <ion-label >{{ 'Measurement 1 (ppm)'}}</ion-label>
-        <ion-input type="number" name="measurement_1"  [(ngModel)]="measurement1"  [ngModelOptions]="{standalone: true}"></ion-input>
+        <ion-label >{{ 'Measurement 1 (ppm)'}}*</ion-label>
+        <ion-input type="number" name="measurement_1"  [(ngModel)]="measurement1" formControlName="measure1"></ion-input>
       </ion-item>
 
       <!-- Measurement 2 (ppm) -->
@@ -88,7 +87,7 @@
      
       <!-- Submit button -->
       <div padding>
-        <button ion-button color="primary" block (click)="producerFormSendData()">{{ 'Send'}}</button>
+        <button ion-button color="primary" block (click)="saveMeasurement()">{{ 'Send'}}</button>
       </div>
       
     </ion-list>
