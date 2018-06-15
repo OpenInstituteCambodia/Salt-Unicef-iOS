@@ -4,32 +4,40 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<!--<ion-header>-->
-
-  <!--<ion-navbar>-->
-    <!--<ion-title>home</ion-title>-->
-  <!--</ion-navbar>-->
-
-<!--</ion-header>-->
+<ion-header>
+  <ion-navbar hideBackButton>
+    <ion-title>
+      {{ 'h_title' | translate }}
+      </ion-title>
+    <ion-buttons   end>
+         <!--<ion-buttons  end> -->
+      <button ion-button icon-only (click)="changeLanguage()">
+        <img alt="logo" height="40"   [src]="langFlag" > 
+      </button>
+    </ion-buttons>
+    
+  </ion-navbar>
+</ion-header>
 
 
 <ion-content padding>
   <div align-items-center>
-    <ion-label class="label1">
-      NSCIDD
+    <ion-label class="label1" text-wrap>
+      {{'h_title_nscidd' | translate }}
     </ion-label>
     <ion-label class="label2">
-      Salt Iodization Quality Control
+      {{'h_title_salt' | translate }}
     </ion-label>
   </div>
-  <div class="btnQuiz" >
+  <div class="btnEnter" >
     <button  ion-button class="btn btn-primary btn-lg btn3d" block color="primary" (click)="goToDaily()">
-      Enter daily Iodization data
+      {{'h_btn_enter' | translate }}
     </button>
   </div>
-  <div class="btnReview">
+  
+  <div class="btnExit">
     <button ion-button class="btn btn-primary btn-lg btn3d" block color="primary" (click)="exitButtonClick()">
-      Exit
+      {{'h_btn_exit' | translate }}
     </button>
   </div>
  
@@ -37,7 +45,7 @@
     <span  [hidden]="hasOffline<=0">
       <ion-card >
         <ion-card-content>
-          Information stored in your phone will be sent when your phone connects to Internet.
+          {{'h_text_info' | translate }}
         </ion-card-content>
       </ion-card>
   </span>

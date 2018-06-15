@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Daily Report</ion-title>
+    <ion-title>{{ 'p_daily_report'| translate }}</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -15,79 +15,79 @@
 
       <!-- Date of Measurement -->
       <ion-item>
-        <ion-label >{{ 'Date of measurement'}}*</ion-label>
+        <ion-label >{{ 'p_date_measurement'| translate }}*</ion-label>
         <ion-datetime displayFormat="MM/DD/YYYY"  [(ngModel)]="MeasurementDate" [max]="currentDate"  formControlName="measureDate"></ion-datetime>
       </ion-item>
 
       <!-- Salt produced today (Kg) -->              
       <ion-item>
-        <ion-label >{{ 'Salt produced today (Kg)'}}*</ion-label>
+        <ion-label text-wrap>{{ 'p_salt_produced'| translate }}*</ion-label>
         <ion-input type="number" name="salt_per_day"  [(ngModel)]="saltProducedToday" formControlName="saltProDaily"></ion-input>
       </ion-item>
 
       <!-- Potassium used today (Kg) -->       
       <ion-item>
-        <ion-label >{{ 'Potassium used today (Kg)'}}*</ion-label>
+        <ion-label text-wrap>{{ 'p_potassium_used_today'| translate }}*</ion-label>
         <ion-input type="number" name="potassium_per_day"  [(ngModel)]="potassiumUsedToday" formControlName="potassiumDaily"></ion-input>
       </ion-item>
 
       <!-- Potassium in stock (Kg) -->
       <ion-item>
-        <ion-label >{{ 'Potassium in stock (Kg)'}}*</ion-label>
+        <ion-label text-wrap>{{ 'p_potassium_in_stock'| translate }}*</ion-label>
         <ion-input type="number" name="potassium_in_stock"  [(ngModel)]="potassiumInStock" formControlName="potassiumStock"></ion-input>
       </ion-item>
 
       <!-- Measurement 1 (ppm) -->
       <ion-item>
-        <ion-label >{{ 'Measurement 1 (ppm)'}}*</ion-label>
+        <ion-label text-wrap>{{ 'p_measure1'| translate }}*</ion-label>
         <ion-input type="number" name="measurement_1"  [(ngModel)]="measurement1" formControlName="measure1"></ion-input>
       </ion-item>
 
       <!-- Measurement 2 (ppm) -->
       <ion-item>
-        <ion-label >{{ 'Measurement 2 (ppm)'}}</ion-label>
+        <ion-label text-wrap>{{ 'p_measure2'| translate }}</ion-label>
         <ion-input type="number" name="measurement_2"  [(ngModel)]="measurement2"  [ngModelOptions]="{standalone: true}" ></ion-input>
       </ion-item>
 
       <!-- Measurement 3 (ppm) -->
       <ion-item>
-        <ion-label >{{ 'Measurement 3 (ppm)'}}</ion-label>
+        <ion-label text-wrap>{{ 'p_measure3'| translate }}</ion-label>
         <ion-input type="number" name="measurement_3"  [(ngModel)]="measurement3"  [ngModelOptions]="{standalone: true}" ></ion-input>
       </ion-item>
 
       <!-- Measurement 4 (ppm) -->
       <ion-item>
-        <ion-label >{{ 'Measurement 4 (ppm)'}}</ion-label>
+        <ion-label text-wrap>{{ 'p_measure4'| translate }}</ion-label>
         <ion-input type="number" name="measurement_4"  [(ngModel)]="measurement4"  [ngModelOptions]="{standalone: true}" ></ion-input>
       </ion-item>
 
       <!-- Measurement 5 (ppm) -->
       <ion-item>
-        <ion-label >{{ 'Measurement 5 (ppm)'}}</ion-label>
+        <ion-label text-wrap>{{ 'p_measure5'| translate }}</ion-label>
         <ion-input type="number" name="measurement_5"  [(ngModel)]="measurement5"  [ngModelOptions]="{standalone: true}"></ion-input>
       </ion-item>
 
       <!-- Measurement 6 (ppm) -->
       <ion-item>
-        <ion-label >{{ 'Measurement 6 (ppm)'}}</ion-label>
+        <ion-label text-wrap>{{ 'p_measure6'| translate }}</ion-label>
         <ion-input type="number" name="measurement_6"  [(ngModel)]="measurement6"  [ngModelOptions]="{standalone: true}" ></ion-input>
       </ion-item>
 
       <!-- Measurement 7 (ppm) -->
       <ion-item>
-        <ion-label >{{ 'Measurement 7 (ppm)'}}</ion-label>
+        <ion-label text-wrap>{{ 'p_measure7'| translate }}</ion-label>
         <ion-input type="number" name="measurement_7"  [(ngModel)]="measurement7"  [ngModelOptions]="{standalone: true}" ></ion-input>
       </ion-item>
       
       <!-- Measurement 8 (ppm) -->
       <ion-item>
-        <ion-label >{{ 'Measurement 8 (ppm)'}}</ion-label>
+        <ion-label text-wrap>{{ 'p_measure8'| translate }}</ion-label>
         <ion-input type="number" name="measurement_8"  [(ngModel)]="measurement8"  [ngModelOptions]="{standalone: true}"></ion-input>
       </ion-item>
      
       <!-- Submit button -->
       <div padding>
-        <button ion-button color="primary" block (click)="saveMeasurement()">{{ 'Send'}}</button>
+        <button ion-button color="primary" block (click)="saveMeasurement()">{{ 'p_send'| translate }}</button>
       </div>
       
     </ion-list>

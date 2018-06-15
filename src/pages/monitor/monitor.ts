@@ -16,6 +16,7 @@ import { HomePage } from '../home/home';
 import { ProducerPage} from '../producer/producer';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { getCurrentDebugContext } from '@angular/core/src/view/services';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @IonicPage()
@@ -56,7 +57,9 @@ export class MonitorPage {
     private app: App,
     private sqlite: SQLite,
     public authService: AuthServiceProvider,
-    public formBuilder: FormBuilder) {
+    public formBuilder: FormBuilder,
+    public translate: TranslateService) {
+      translate.use('km');
     //console.log(this.navParams);
     var localStorage_userData = JSON.parse(localStorage.getItem("userData"));
     console.log("userData = " + JSON.stringify(localStorage_userData));
@@ -146,12 +149,16 @@ export class MonitorPage {
             
             if (this.network.type == "none") {
               console.log('Data Inserted into monitor_measurements!');
-              this.authService.presentLoadingCustom(2000, "Saving data offline ...");
+              this.translate.get('o_saving_offline').subscribe(val =>{
+                this.authService.presentLoadingCustom(2000, val);
+              });
               this.authService.hasOfflineData("monitor_measurements",HomePage);
             }
             else {
               this.authService.synchDataToServerUseService(HomePage,"monitor_measurements");//=> working fine
-              this.authService.presentLoadingCustom(6000, "Saving data ...");
+              this.translate.get('o_saving').subscribe(val =>{
+                this.authService.presentLoadingCustom(2000, val);
+              });
               
             }
           })
@@ -159,7 +166,11 @@ export class MonitorPage {
       })
     }
     else
-      this.authService.presentToast("The fields with asterike (*) are required");
+    {
+      this.translate.get('o_required').subscribe(val =>{
+        this.authService.presentToast("The fields with asterike (*) are required");
+      });
+    }
   }
 
 

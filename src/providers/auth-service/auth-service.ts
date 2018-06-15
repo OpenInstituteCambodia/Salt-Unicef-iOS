@@ -22,6 +22,7 @@ export class AuthServiceProvider {
   //home: Page = HomePage;
   listOfAllTable = ["monitor_measurements", "producer_measurements"];
   responseData: any;
+  langTitle: string;
 
   constructor(public http: Http,
     private sqlite: SQLite,

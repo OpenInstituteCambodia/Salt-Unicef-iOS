@@ -17,9 +17,12 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { FormsModule } from '@angular/forms';
 import { SQLite } from '@ionic-native/sqlite';
 import { Toast } from '@ionic-native/toast';
-import { HttpModule} from '@angular/http';
+import { HttpModule, Http} from '@angular/http';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import { Network } from '@ionic-native/network';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 // Initialize Firebase -- phyrum 
 const config = {
@@ -41,6 +44,10 @@ const config = {
 //   messagingSenderId: "783683067533"
 // };
 
+export function createTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
+
 @NgModule({
   declarations: [
     MyApp,
@@ -57,7 +64,15 @@ const config = {
     AngularFireModule.initializeApp(config),
     AngularFireDatabaseModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+    HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (createTranslateLoader),
+        deps: [HttpClient]
+      }
+    })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
