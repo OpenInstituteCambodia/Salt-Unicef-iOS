@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
-import { IonicPageModule } from 'ionic-angular';
-import { ProducerPage } from './producer';
+//import { IonicPageModule } from 'ionic-angular';
+//import { ProducerPage } from './producer';
 // import { Network } from '@ionic-native/network';
 
 @NgModule({
@@ -8,7 +8,7 @@ import { ProducerPage } from './producer';
     // ProducerPage,
   ],
   imports: [
-    IonicPageModule.forChild(ProducerPage),
+    //IonicPageModule.forChild(ProducerPage),
     // Network
   ],
 })

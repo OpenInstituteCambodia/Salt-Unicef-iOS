@@ -5,6 +5,7 @@ import { ProducerPage } from '../producer/producer';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { Network } from '@ionic-native/network';
+import { TranslateService } from '@ngx-translate/core';
 
 
 /**
@@ -25,6 +26,7 @@ export class HomePage {
   hasOffline:any=0;
   hasOfflineTest: any;
   listOfAllTable = ["producer_measurements","monitor_measurements"];
+  langFlag: string;
 
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
@@ -32,18 +34,37 @@ export class HomePage {
     public platform: Platform,
     private sqlite: SQLite,
     public authService: AuthServiceProvider,
-  public network: Network) {
-    var self = this;
-    this.localStorage_userData = JSON.parse(localStorage.getItem("userData"));
-    if(this.localStorage_userData != null)
-      this.userRole = this.localStorage_userData.role;
-    console.log('Constructor HomePage');
+    public network: Network,
+    public translate: TranslateService) {
+      if(localStorage.getItem("currentLang") == null)
+      {
+        this.translate.use('km');
+      }
+     
+      this.translate.use(localStorage.getItem("currentLang")); 
+      
+      if(localStorage.getItem("currentLang")==="en")
+      {
+        this.langFlag ="assets/imgs/khmer_flag.png";
+        authService.langTitle = "ភាសាខ្មែរ";
+      }
+      else
+      {
+        this.langFlag ="assets/imgs/english_flag.png";
+        authService.langTitle = "English";
+      }
+        
+      //var self = this;
+      this.localStorage_userData = JSON.parse(localStorage.getItem("userData"));
+      if(this.localStorage_userData != null)
+        this.userRole = this.localStorage_userData.role;
+      console.log('Constructor HomePage');
 
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad HomePage');
-    var producerForm : ProducerPage;
+    //var producerForm : ProducerPage;
     this.hasOffline= localStorage.getItem("offline");
     console.log('hasOffline in ionViewDidLoad HomePage = '+this.hasOffline);
     
@@ -88,10 +109,12 @@ export class HomePage {
     if(this.userRole == 2)
     {
       this.navCtrl.push(ProducerPage);
+
       //this.exit();
     }
     else if(this.userRole == 3)
     {
+      this.createTableFacilities();
       this.navCtrl.push(MonitorPage);
       //this.exit();
     }
@@ -102,22 +125,74 @@ export class HomePage {
   }
 
   private exitButtonClick() {
+    let t = '';
+    this.translate.get('o_exitApp').subscribe(val =>{
+      t=val;
+    });
+
+    let sms = '';
+    this.translate.get('o_exit').subscribe(val =>{
+      sms=val;
+    });
+
+    let no = '';
+    this.translate.get('m_no').subscribe(val =>{
+      no=val;
+    });
+
+    let con = '';
+    this.translate.get('o_confirm').subscribe(val =>{
+      con=val;
+    });
+
     let alert = this.alertCtrl.create({
-      title: 'Exit App',
-      message: '​Are you sure you want to exit?',
+      title: t,
+      message: sms,
       buttons: [
         {
-          text: "No",
+          text: no,
           role: 'cancel'
         },
         {
-          text: "Confirm",
+          text: con,
           handler: () => {
             this.platform.exitApp();
+            //ionic.Platform.exitApp(); => error
+            //navigator.app.exitApp(); => error
+
           }
         },
       ]
     });
     alert.present();
   }
+
+  createTableFacilities() {
+    console.log("created facilities table");
+    this.sqlite.create({
+      name: 'unicef_salt',
+      location: 'default'
+    }).then((db: SQLiteObject) => {
+      db.executeSql('CREATE TABLE IF NOT EXISTS facilities (id INT PRIMARY KEY, facility_ref_id TEXT, facility_name TEXT, Latitude TEXT, Longitude TEXT, created_at TEXT, updated_at TEXT)', {})
+        .then(res => console.log('execuated SQL in createTableFacilities!'))
+        .catch(e => console.log(e));
+    })
+  }
+
+  changeLanguage(){
+    if(this.translate.currentLang === 'km'){
+      this.translate.use('en');
+      this.authService.langTitle = "ភាសា​ខ្មែរ";
+      this.langFlag ="assets/imgs/khmer_flag.png";
+      localStorage.setItem("currentLang","en");
+    }
+    else{
+      this.translate.use('km');
+      this.authService.langTitle = "English";
+      this.langFlag ="assets/imgs/english_flag.png";
+      localStorage.setItem("currentLang","km");
+    }
+  }
+
+
 }

@@ -1,8 +1,15 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      User Login
+    {{ 'l_title' | translate }}
     </ion-title>
+
+    <ion-buttons   end>
+      <!--<ion-buttons  end> -->
+   <button ion-button icon-only (click)="changeLanguage()">
+     <img alt="logo" class="img-lang"  [src]="langFlag" >
+   </button>
+ </ion-buttons>
   </ion-navbar>
 </ion-header>
 
@@ -10,20 +17,23 @@
   <form [formGroup]="loginValidate">
     <ion-list>
       <ion-item>
-        <ion-label floating class="invalid">{{ 'Username'}}</ion-label>
+        <ion-label floating class="invalid">{{ 'l_usr' | translate }}</ion-label>
         <ion-input type="text" value="" [(ngModel)]="userData.email" formControlName="usr"></ion-input>
       </ion-item>
       
       <ion-item>
-        <ion-label floating  class="invalid">{{ 'Password'}}</ion-label>
+        <ion-label floating  class="invalid">{{ 'l_pwd' | translate }}</ion-label>
         <ion-input type="password"  value="" [(ngModel)]="userData.pwd" formControlName="pwd"></ion-input>
       </ion-item>
 
-      <div padding>
+      <div  class="btnLang">
         <button ion-button color="primary" block (click)="signIn()">
-          {{ 'Login'}}
+          {{ 'l_login' | translate }}
         </button>
       </div>
+
+      
+
     </ion-list>
   </form>
   

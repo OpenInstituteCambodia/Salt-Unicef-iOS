@@ -1,14 +1,15 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController, App } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, App } from 'ionic-angular';
 //import {AngularFireDatabase} from 'angularfire2/database';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
-import { Toast } from '@ionic-native/toast';
+//import { Toast } from '@ionic-native/toast';
 import { Network } from '@ionic-native/network';
 import { Http } from '@angular/http';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import async from 'async';
 import { HomePage } from '../home/home';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 
 // declare var navigator: any;
 // declare var Connection: any; 
@@ -77,14 +78,15 @@ export class ProducerPage {
     private network: Network,
     public navCtrl: NavController,
     private sqlite: SQLite,
-    private toast: Toast,
+    //private toast: Toast,
     public navParams: NavParams,
     public http: Http,
     public authService: AuthServiceProvider,
-    private toastCtrl: ToastController,
+    //private toastCtrl: ToastController,
     public appCtrl: App,
-    public formBuilder: FormBuilder
-  ) {
+    public formBuilder: FormBuilder,
+    public translate: TranslateService) {
+      translate.use(localStorage.getItem("currentLang"));
     var localStorage_facilityData = JSON.parse(localStorage.getItem("facilityData"));
     var localStorage_userData = JSON.parse(localStorage.getItem("userData"));
     this.producerId = localStorage_facilityData.id;
@@ -154,14 +156,18 @@ export class ProducerPage {
 
 
               if (this.network.type == "none") {
-                this.authService.presentLoadingCustom(3000, "Saving data offline ...");
+                this.translate.get('o_saving_offline').subscribe(val =>{
+                  this.authService.presentLoadingCustom(2000, val);
+                });
                 //this.hasOfflineData("producer_measurements");
                 this.authService.hasOfflineData("producer_measurements",HomePage);
                 
               }
               else {
                 this.authService.synchDataToServerUseService(HomePage,"producer_measurements");//=> working fine
-                this.authService.presentLoadingCustom(5000, "Saving data ...");
+                this.translate.get('o_saving').subscribe(val =>{
+                  this.authService.presentLoadingCustom(2000, val);
+                });
                 
               }
             
@@ -170,7 +176,11 @@ export class ProducerPage {
     })
   }
   else
-    this.authService.presentToast("The fields with asterike (*) are required");
+    {
+      this.translate.get('o_required').subscribe(val =>{
+        this.authService.presentToast(val);
+      });
+    }
   }
 
   /* public updateIsSentColumn() {

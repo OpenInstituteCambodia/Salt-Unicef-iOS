@@ -8,14 +8,15 @@ import { IonicPage, NavController, NavParams, Platform, App } from 'ionic-angula
 import { AlertController } from 'ionic-angular';
 
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
-import { Toast } from '@ionic-native/toast';
+//import { Toast } from '@ionic-native/toast';
 import async from 'async';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { Network } from '@ionic-native/network';
 import { HomePage } from '../home/home';
-import { ProducerPage} from '../producer/producer';
+//import { ProducerPage} from '../producer/producer';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { getCurrentDebugContext } from '@angular/core/src/view/services';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @IonicPage()
@@ -48,7 +49,7 @@ export class MonitorPage {
 
   constructor(private network: Network,
     private alertCtrl: AlertController,
-    private toast: Toast,
+    //private toast: Toast,
     // private fire: AngularFireAuth,
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -56,7 +57,9 @@ export class MonitorPage {
     private app: App,
     private sqlite: SQLite,
     public authService: AuthServiceProvider,
-    public formBuilder: FormBuilder) {
+    public formBuilder: FormBuilder,
+    public translate: TranslateService) {
+      translate.use(localStorage.getItem("currentLang"));
     //console.log(this.navParams);
     var localStorage_userData = JSON.parse(localStorage.getItem("userData"));
     console.log("userData = " + JSON.stringify(localStorage_userData));
@@ -146,12 +149,16 @@ export class MonitorPage {
             
             if (this.network.type == "none") {
               console.log('Data Inserted into monitor_measurements!');
-              this.authService.presentLoadingCustom(2000, "Saving data offline ...");
+              this.translate.get('o_saving_offline').subscribe(val =>{
+                this.authService.presentLoadingCustom(2000, val);
+              });
               this.authService.hasOfflineData("monitor_measurements",HomePage);
             }
             else {
               this.authService.synchDataToServerUseService(HomePage,"monitor_measurements");//=> working fine
-              this.authService.presentLoadingCustom(6000, "Saving data ...");
+              this.translate.get('o_saving').subscribe(val =>{
+                this.authService.presentLoadingCustom(2000, val);
+              });
               
             }
           })
@@ -159,7 +166,11 @@ export class MonitorPage {
       })
     }
     else
-      this.authService.presentToast("The fields with asterike (*) are required");
+    {
+      this.translate.get('o_required').subscribe(val =>{
+        this.authService.presentToast("The fields with asterike (*) are required");
+      });
+    }
   }
 
 
@@ -428,9 +439,9 @@ export class MonitorPage {
               switch(equalReturn)
               {
                 case 1: // num_q is equal, update order_questions by id
-                  var objOrderQuestion = result["data"];
-                  console.log("data = "+objOrderQuestion);
-                  objOrderQuestion.forEach(item =>{
+                  var updateFacility1 = result["data"];
+                  console.log("data = "+updateFacility1);
+                  updateFacility1.forEach(item =>{
                     self.updateFacility(item["id"],item["facility_ref_id"],item["facility_name"],item["Latitude"], item["Longitude"], item["updated_at"]);
                     
                   });
@@ -438,8 +449,8 @@ export class MonitorPage {
                   
                   break;
                 case 0: // num_q is not equal, replace a whole order_questions table
-                  var objOrderQuestion = result["data"];
-                  self.truncateTableFacility("facilities",objOrderQuestion);
+                  var updateFacility2 = result["data"];
+                  self.truncateTableFacility("facilities",updateFacility2);
                   
                   break;
               }
@@ -469,15 +480,15 @@ export class MonitorPage {
       "last_download_date":""
     };
     var self = this;
-    var asyncTasks = [];
-    var number_of_records ="number_of_records";
+    //var asyncTasks = [];
+    //var number_of_records ="number_of_records";
 
     var pro = new Promise(function(resolve, reject) {
         var subTasks = [];
         
         // Task to count total number of records in order_questions table
         subTasks.push(async function(callback) {
-          var colNames = [];
+          //var colNames = [];
   
           try {
             var db = await self.sqlite.create({
@@ -560,14 +571,14 @@ export class MonitorPage {
       name: 'unicef_salt',
       location: 'default'
     }).then((db: SQLiteObject)  => {
-      db.executeSql('TRUNCATE TABLE facilities',[])
+     /* db.executeSql('TRUNCATE TABLE facilities',[])
       .then( res => {
         console.log('Data REPLACED!');
       })
       .catch((e) => {
         console.log('Catch in TRUNCATE:' + e);
       });
-
+*/
       db.executeSql('INSERT INTO facilities(id, facility_ref_id, facility_name, Latitude, Longitude, created_at, updated_at) VALUES (?,?,?,?,?,?,?)',[id, facility_ref_id, facility_name, Latitude, Longitude, created_date, updated_date])
       .then( res => {
         console.log('Data REPLACED!');
@@ -581,7 +592,7 @@ export class MonitorPage {
   // Creator: SAMAK //
   // Function to replace the whole order questions table//
   truncateTableFacility(tableName:string, objOrderQuestion: any){
-    var self = this;
+    //var self = this;
     this.sqlite.create({
       name: 'unicef_salt',
       location: 'default'

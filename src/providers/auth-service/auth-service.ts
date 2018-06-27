@@ -3,10 +3,10 @@ import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map'; 
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 import { ToastController, LoadingController, App } from 'ionic-angular';
-import { HomePage } from '../../pages/home/home';
+//import { HomePage } from '../../pages/home/home';
 import { Page } from 'ionic-angular/navigation/nav-util';
 import async from 'async';
-import { Network } from '@ionic-native/network';
+//import { Network } from '@ionic-native/network';
 
 let apiUrl = "http://salt.open.org.kh/api/";
 
@@ -22,6 +22,7 @@ export class AuthServiceProvider {
   //home: Page = HomePage;
   listOfAllTable = ["monitor_measurements", "producer_measurements"];
   responseData: any;
+  langTitle: string;
 
   constructor(public http: Http,
     private sqlite: SQLite,
@@ -256,33 +257,33 @@ export class AuthServiceProvider {
           else if(tableName=="monitor_measurements"){
             console.log('colNames of table monitor_measurements: ' + colNames);
             try {
-              var db = await self.sqlite.create({
+              var dbMonitor = await self.sqlite.create({
                 name: 'unicef_salt',
                 location: 'default'
               });
-              var resOfflineRecords = await db.executeSql('SELECT * FROM '+ tableName +' where isSent=?', [0])
-              for (var i = 0; i < resOfflineRecords.rows.length; i++) {
-                var eachData = resOfflineRecords.rows.item(i);
+              var resOfflineRecordsMonitor = await dbMonitor.executeSql('SELECT * FROM '+ tableName +' where isSent=?', [0])
+              for (var iMonitor = 0; iMonitor < resOfflineRecordsMonitor.rows.length; iMonitor++) {
+                var eachDataMonitor = resOfflineRecordsMonitor.rows.item(iMonitor);
                 // Retrieve All Columns Name From table producer_measurements //
-                var valFromTable = [eachData.monitor_id,
-                eachData.facility_id,
-                eachData.at_producer_site,
-                eachData.location,
-                eachData.latitude,
-                eachData.longitude,
-                eachData.measurement,
-                eachData.warning,
-                eachData.date_of_visit,
-                eachData.date_of_follow_up];
-                var col = null;
-                var obj = {};
-                for (var j = 0; j < colNames.length; j++) {
+                var valFromTableMonitor = [eachDataMonitor.monitor_id,
+                  eachDataMonitor.facility_id,
+                  eachDataMonitor.at_producer_site,
+                  eachDataMonitor.location,
+                  eachDataMonitor.latitude,
+                  eachDataMonitor.longitude,
+                  eachDataMonitor.measurement,
+                  eachDataMonitor.warning,
+                  eachDataMonitor.date_of_visit,
+                  eachDataMonitor.date_of_follow_up];
+                var colIndex = null;
+                var objColname = {};
+                for (var jColname = 0; jColname < colNames.length; jColname++) {
                   // Construct JSON string with key (column name)/value (offline data) pair //
-                  col = colNames[j];
-                  obj[col] = valFromTable[j];
+                  colIndex = colNames[jColname];
+                  objColname[colIndex] = valFromTableMonitor[jColname];
                 }
 
-                _data[tableName].push(obj);
+                _data[tableName].push(objColname);
                 console.log('_data = ' + JSON.stringify(_data));
 
                 
